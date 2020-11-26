@@ -22,15 +22,19 @@
 </section>
 {% endmacro %}
 
+{% macro list(pages) %}
+{% for page in pages %}
+{{ section::page(page=page) }}
+{% endfor %}
+{% endmacro %}
+
 
 {% macro section(path, count=0) %}
 <section class="list">
   {% set section = get_section(path=path ~ "_index.md") %}
   {% set pages = paginator.pages | default(value=section.pages) %}
   <h2><a href="{{ get_url(path=section.path) }}">{{ section.title }}</a></h2>
-  {% for page in pages %}
-  {{ section::page(page=page) }}
-  {% endfor %}
+  {{ section::list(pages=pages) }}
 </section>
 {% endmacro %}
 
@@ -40,3 +44,13 @@
 {{ section::section_preview(path=section_name ~ "/", count=count) }}
 {% endfor %}
 {% endmacro%}
+
+{%- macro pagination(paginator) -%}
+{% if paginator.next %}
+  <a rel="next" href="{{paginator.next}}">◀ Older</a>
+{% endif %}
+{% if paginator.next and paginator.previous %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}
+{% if paginator.previous %}
+  <a rel="prev" href="{{paginator.previous}}">Newer ▶</a>
+  {% endif %}
+{%- endmacro pagination -%}

@@ -15,4 +15,9 @@
     {{ section::section(path=section.path | trim_start_matches(pat="/")) }}
   </section>
 </article>
+{% if paginator %}
+<nav class="pagination">
+  {{ section::pagination(paginator=paginator) }}
+</nav>
+{% endif %}
 {% endblock content %}

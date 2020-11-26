@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "macros/page.html" as page %}
+{% import "macros/section.html" as section %}
+
+{% block title %}
+#{{ term.name }} &middot; {{ super() }}
+{% endblock title%}
+
+{% block head %}
+{% if taxonomy.rss %}
+<link rel="alternate" type="application/rss+xml" title="#{{ term.name }}RSS - config.title"
+  href="{{ current_path }}/rss.xml">
+{% endif %}
+{% endblock head %}
+
+{% block content %}
+<nav class="ancestors">
+  <section class="page-ancestors">
+    <a href="{{ get_url(path='/') | safe }}">Home</a> |
+    <a href="{{ get_url(path=taxonomy.name) | safe }}">{{ taxonomy.name | title }}</a>
+  </section>    
+</nav>
+<article>
+  <section class="list">
+    <h2>#<a href="{{ get_url(path=term.permalink) | safe }}">{{ term.name }}</a></h2>
+    {% if paginator %}
+    {{ section::list(pages=paginator.pages) }}
+    {% else %}
+    {{ section::list(pages=term.pages) }}
+    {% endif %}
+  </section>
+</article>
+{% endblock content %}
