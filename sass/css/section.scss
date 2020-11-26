@@ -1,0 +1,63 @@
+section.list, section.preview {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    border: none;
+  }
+
+  h5::before {
+    content: "";
+  }
+
+  h6::before {
+    content: "";
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    border-bottom: 1px solid gray;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+  }
+
+  article {
+    border-left: 0.5rem solid lightgray;
+    padding-left: 0.5rem;
+    padding-bottom: 0.1rem;
+    margin-bottom: 0.5rem;
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    span {
+      display: block;
+      font-size: 0.7rem;
+      font-style: italic;
+      margin-top: 0;
+    }
+
+    p {
+      margin: 0.5rem 0;
+      font-size: 0.8rem;
+    }
+  }
+
+  a {
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 1600px) {
+  section.preview {
+    font-size: 0.8rem;
+    max-width: 36em;
+    display: inline-block;
+    margin-right: 2rem;
+  }
+}

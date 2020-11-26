@@ -1,0 +1,18 @@
+{% macro page(page) %}
+  <h1><a href="{{ get_url(path=page.path) }}">{{ page.title }}</a></h1>
+  {% if page.date or page.updated %}
+  <span>{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") }}</span>
+  {% endif %}
+{% endmacro %}
+
+{% macro ancestors(page) %}
+<section class="page-ancestors">
+{% for section_path in page.ancestors %}
+{% set section = get_section(path=section_path) %}
+{% set section_title = section.title | default(value="Home") %}
+{% set section_url = get_url(path=section_path) | replace(from="/_index.md", to="") %}
+<a href="{{ section_url }}">{{ section_title }}</a>
+{% if not loop.last %}|{% endif %}
+{% endfor %}
+</div>
+{% endmacro %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "macros/section.html" as section %}
+
+{% block content %}
+<article>
+  {% if config.extra.index_content or config.extra.index_previews %}
+    {% if config.extra.index_content %}
+      {% include "includes/index/content.html" %}
+    {% endif %}
+    {% if config.extra.index_preview %}
+      {{ section::preview(count=3) }}
+    {% endif %}
+  {% else %}
+    {% include "includes/index/configure.html" %}
+  {% endif %}
+</article>
+{% endblock content %}

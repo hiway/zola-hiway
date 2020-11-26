@@ -1,0 +1,2 @@
+{% set home = get_section(path=config.extra.index_content ~ "/_index.md") %}
+{{ home.content | safe }}

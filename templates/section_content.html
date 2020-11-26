@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "macros/section.html" as section %}
+{% import "macros/page.html" as page %}
+
+{% block title %}
+About - {{ super() }}
+{% endblock title%}
+
+{% block content %}
+<nav class="ancestors">
+  {{ page::ancestors(page=section) }}
+</nav>
+<article>
+  <h1><a href="{{ get_url(path=section.path) }}">{{ section.title }}</a></h1>
+  <p>{{ section.content | safe }}</p>
+</article>
+{% endblock content %}

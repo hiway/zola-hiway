@@ -1,0 +1,16 @@
+{%- set root_section = get_section(path="_index.md") %}
+<nav class="menu">
+  <ul>
+    <li><a href="{{ get_url(path='/') | safe}}">Home</a></li>
+    {%- for section in root_section.subsections %}
+    {%- set section_name = section | replace(from='/_index.md', to='') %}
+    {% if section_name == config.extra.index_content | default(value="non-existent-section") %}{% continue %}{% endif %}
+    <li><a href="{{ get_url(path=section_name) | safe}}">{{ section_name | title }}</a></li>
+    {%- endfor -%}
+    {% if config.taxonomies %}
+    {% for taxonomy in config.taxonomies %}
+    <li><a href="{{ get_url(path=taxonomy.name) | safe }}">{{ taxonomy.name | title }}</a></li>
+    {% endfor %}
+    {% endif %}
+  </ul>
+</nav>

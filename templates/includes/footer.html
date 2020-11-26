@@ -1,0 +1,8 @@
+<hr />
+{% if config.extra.made_with_enable | default(value=true) %}
+<aside class="made-with">
+  Made with
+  <a href="https://getzola.org/">Zola</a> and
+  <a href="https://github.com/hiway/zola-hiway/">Hiway theme</a>.
+</aside>
+{% endif %}

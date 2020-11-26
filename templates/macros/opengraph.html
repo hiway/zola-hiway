@@ -1,0 +1,10 @@
+{%- macro opengraph(title, description, type="website", url="", image="", video="") %}
+{%- if not url -%}{% set url = get_url(path=current_path) %}{%- endif -%}
+
+  <meta property="og:title" content="{{ title | safe }}">
+{% if description %}  <meta property="og:description" content="{{ description | safe }}">{% endif %}
+{% if type %}  <meta property="og:type" content="{{ type | safe }}">{% endif %}
+{% if url %}  <meta property="og:url" content="{{ url | safe }}">{% endif %}
+{% if image %}  <meta property="og:image" content="{{ image | safe}}">{% endif %}
+{% if video %}  <meta property="og:video" content="{{ video | safe }}">{% endif %}
+{%- endmacro opengraph -%}

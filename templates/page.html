@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import "macros/page.html" as page %}
+
+{% block title %}
+{{ page.title }} - {{ super() }}
+{% endblock title%}
+
+{% block content %}
+<nav class="ancestors">
+  {{ page::ancestors(page=page) }}
+</nav>
+<article class="page">
+  {{ page::page(page=page) }}
+  {{ page.content | safe }}
+</article>
+{% endblock content %}

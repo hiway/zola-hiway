@@ -1,0 +1,14 @@
+{% import "macros/image.html" as image %}
+
+{% set sizes = sizes | default(value=[200, 400, 600, 800, 1000, 1200, 1600, 2000]) %}
+{% set scale = scale | default(value=1) %}
+{% set path = page.path ~ asset | trim_start_matches(pat="/") %}
+{% set max_width = max_width | default(value="100%") %}
+
+{{ image::responsive(
+    path=path,
+    caption=caption,
+    sizes=sizes,
+    scale=scale,
+    max_width=max_width
+    ) }}

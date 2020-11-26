@@ -1,0 +1,180 @@
+article {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1rem;
+    border-bottom: 1px solid gray;
+
+    a {
+      border-bottom: none;
+    }
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+    padding-left: 1rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+    padding-left: 2rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+    padding-left: 3rem;
+  }
+
+  h5::before {
+    content: "› ";
+  }
+
+  h6::before {
+    content: "» ";
+  }
+
+  span {
+    display: block;
+    font-size: 0.7rem;
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    margin-top: 1rem;
+    line-height: 1.4;
+    // font-size: 0.8rem;
+  }
+
+  a {
+    color: blue;
+    text-decoration: none;
+    border-bottom: 1px solid blue;
+    padding-bottom: 0.1rem;
+  }
+
+  a:visited {
+    color: purple;
+    border-color: purple;
+  }
+
+  ul,
+  ol {
+    list-style-position: inside;
+    line-height: 1.8;
+    margin-top: 1rem;
+    padding-left: 1rem;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  blockquote {
+    border-left: 5px solid green;
+    margin-top: 1rem;
+    padding: 1rem;
+
+    p {
+      color: black;
+      display: block;
+      font-style: italic;
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    // max-height: 90vh;
+    // width: auto;
+    border: 5px solid white;
+    margin: 1rem 0;
+  }
+
+  pre {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 1rem 0.5rem;
+    box-shadow: 0 0 5px gray;
+    margin-top: 1rem;
+    color: white;
+    background-color: black;
+    overflow-x: auto;
+
+    code {
+      margin: 0;
+      font-size: inherit;
+      color: white;
+    }
+    
+    span {
+      display: inline;
+      font-size: 0.8rem;
+      font-style: normal;
+    }
+  }
+
+  code {
+    color: orangered;
+    margin: 0 0.2rem;
+    font-size: 0.9rem;
+  }
+
+  ::selection {
+    color: black;
+    background: lightgoldenrodyellow;
+    display: block;
+  }
+
+  ::-moz-selection {
+    color: black;
+    background: lightgoldenrodyellow;
+    display: block;
+  }
+
+  .page-count {
+    font-size: 0.7rem;
+  }
+
+  ul.tag-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  div.page-date {
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+  }
+
+  div.page-ancestors {
+    font-size: 0.8rem;
+  }
+}
+
+article {
+  p, span, div, ul, ol {
+    max-width: 42em;
+  }
+}

@@ -1,0 +1,12 @@
+{% if config.extra.toolbar_enable | default(value=true) %}
+<details class="toolbar">
+  <summary>
+    {% if current_path == "/" %}
+    &nbsp;Menu
+    {% else %}
+    &nbsp;<h1>{{ config.title }}</h1>
+    {% endif %}
+  </summary>
+  {% include "includes/navigation.html" %}
+</details>
+{% endif %}

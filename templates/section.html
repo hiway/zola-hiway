@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "macros/section.html" as section %}
+{% import "macros/page.html" as page %}
+
+{% block title %}
+{{ section.title }} - {{ super() }}
+{% endblock title%}
+
+{% block content %}
+<nav class="ancestors">
+  {{ page::ancestors(page=section) }}
+</nav>
+<article>
+  <section role="feed" aria-busy="false">
+    {{ section::section(path=section.path | trim_start_matches(pat="/")) }}
+  </section>
+</article>
+{% endblock content %}

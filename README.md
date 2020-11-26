@@ -1,2 +1,3 @@
-# zola-hiway
-A Theme for Zola Static Site Generator
+# hiway theme
+
+Theme for Zola static-site-generator

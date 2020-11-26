@@ -1,0 +1,13 @@
+{% macro responsive(path, caption, sizes, scale, max_width="100%") %}
+{% set default_size = sizes | sort | first %}
+{% set largest_size = sizes | sort | last %}
+{% set default_image = resize_image(path=path, width=default_size, op="fit_width") %}
+<img 
+    src="{{ default_image }}" 
+    width="100%" 
+    alt="{{ caption }}" 
+    sizes="{% for size in sizes | slice(end=-1) %}(max-width: {{size}}px) {{size}}px, {% endfor %} {{largest_size}}px"
+    srcset="{% for size in sizes %}{{ resize_image(path=path, width=size, height=800, format='jpeg', op='fit') }} {{size}}w, {% endfor %}"
+    style="max-width: {{ max_width }};"
+    />
+{% endmacro %}

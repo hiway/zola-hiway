@@ -1,0 +1,8 @@
+# index_content = "home"
+# index_preview = ["blog", "notes"]
+
+style_enable = true
+
+toolbar_enable = true
+sidebar_enable = false
+made_with_enable = true
