@@ -7,9 +7,9 @@
 {% endblock title%}
 
 {% block head %}
-{% if taxonomy.rss %}
-<link rel="alternate" type="application/rss+xml" title="#{{ term.name }}RSS - config.title"
-  href="{{ current_path }}/rss.xml">
+{% if taxonomy.feed %}
+<link rel="alternate" type="application/rss+xml" title="#{{ term.name }}RSS - {{ config.title }}"
+  href="{{ current_path | safe }}{{ config.feed_filename }}">
 {% endif %}
 {% endblock head %}
 
