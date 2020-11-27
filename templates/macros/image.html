@@ -4,9 +4,10 @@
 {% set default_image = resize_image(path=path, width=default_size, op="fit_width") %}
 <img 
     src="{{ default_image | safe }}" 
-    width="100%" 
+    width="100%"
+    height="auto"
     alt="{{ caption }}" 
-    sizes="{% for size in sizes | slice(end=-1) %}(max-width: {{size}}px) {{size}}px, {% endfor %} {{largest_size}}px"
+    sizes="{% for size in sizes | slice(end=-1) %}(max-width: {{size}}px) {{size * scale}}px, {% endfor %} {{largest_size}}px"
     srcset="{% for size in sizes %}{{ resize_image(path=path, width=size, height=800, format='jpeg', op='fit')  | safe}} {{size}}w, {% endfor %}"
     style="max-width: {{ max_width }};"
     />

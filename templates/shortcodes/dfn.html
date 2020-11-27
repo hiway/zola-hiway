@@ -1,0 +1,7 @@
+{# https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-dfn-element #}
+
+{% if abbr %}
+<dfn {% if abbr %}id="{{ id }}"{% endif %}><abbr title="{{ title }}">{{ phrase }}</abbr></dfn>
+{% else %}
+<dfn title="{{ title }}" {% if abbr %}id="{{ id }}"{% endif %}>{{ phrase }}</dfn>
+{% endif %}

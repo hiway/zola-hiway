@@ -1,56 +1,27 @@
-{% macro page(page) %}
-<article>
-  <h3><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h3>
-  {% if page.date or page.updated %}
-  <span>{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") }}</span>
+{%- macro content(section, show_title=true, show_content=true) -%}
+<article class="section-content">
+  {% if show_title %}
+  <h2 class="section-title"><a href="{{ get_url(path=section.path) | safe }}">{{section.title}}</a></h2>
   {% endif %}
-  {% if page.summary %}
-  {{ page.summary | safe }}
-  {% endif %}
+  {% if show_content %}{{ section.content | safe }}{% endif %}
 </article>
-{% endmacro %}
+{%- endmacro -%}
 
 
-{% macro section_preview(path, count=0) %}
-<section class="preview">
-  {% set section = get_section(path=path ~ "_index.md") %}
-  {% set pages = paginator.pages | default(value=section.pages) %}
-  <h2><a href="{{ get_url(path=section.path) | safe }}">{{ section.title }}</a></h2>
-  {% for page in pages | sort(attribute="date") | slice(start=-1 * count) | reverse %}
-  {{ section::page(page=page) }}
-  {% endfor %} 
-</section>
-{% endmacro %}
+{%- macro pages(section) -%}
+{% set pages = paginator.pages | default(value=section.pages) %}
+{{ section::list(pages=pages) }}
+{%- endmacro -%}
 
-{% macro list(pages) %}
+
+{%- macro list(pages) -%}
+<nav class="section-list" title="list of pages">
+<ul>
 {% for page in pages %}
-{{ section::page(page=page) }}
+  <li>{{ page::preview(page=page) }}</li>
 {% endfor %}
-{% endmacro %}
+</ul>
+</nav>
+{%- endmacro -%}
 
 
-{% macro section(path, count=0) %}
-<section class="list">
-  {% set section = get_section(path=path ~ "_index.md") %}
-  {% set pages = paginator.pages | default(value=section.pages) %}
-  <h2><a href="{{ get_url(path=section.path) | safe }}">{{ section.title }}</a></h2>
-  {{ section::list(pages=pages) }}
-</section>
-{% endmacro %}
-
-
-{% macro preview(count=0) %}
-{% for section_name in config.extra.index_preview %}
-{{ section::section_preview(path=section_name ~ "/", count=count) }}
-{% endfor %}
-{% endmacro%}
-
-{%- macro pagination(paginator) -%}
-{% if paginator.next %}
-  <a rel="next" href="{{paginator.next | safe}}">◀ Older</a>
-{% endif %}
-{% if paginator.next and paginator.previous %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}
-{% if paginator.previous %}
-  <a rel="prev" href="{{paginator.previous | safe}}">Newer ▶</a>
-  {% endif %}
-{%- endmacro pagination -%}
