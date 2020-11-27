@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% import "macros/section.html" as section %}
 
-{% block content %}
-<article>
-  {% if config.extra.index_content or config.extra.index_previews %}
-    {% if config.extra.index_content %}
-      {% include "includes/index/content.html" %}
-    {% endif %}
-    {% if config.extra.index_preview %}
-      {{ section::preview(count=3) }}
-    {% endif %}
-  {% else %}
-    {% include "includes/index/configure.html" %}
-  {% endif %}
-</article>
-{% endblock content %}
+{% block content%}
+
+{%- set home = get_section(path="_index.md") -%}
+{{ section::content(section=section, show_title=false) }}
+
+
+<div class="preview">
+  {% for section_name in config.extra.index_preview | default(value=[]) %}
+  {% set subsection = get_section(path=section_name ~ "/_index.md")  %}
+  <h2 class="section-title"><a href="{{ get_url(path=subsection.path) | safe }}">{{subsection.title}}</a></h2>
+  {{ section::list(pages=subsection.pages | sort(attribute="date") | slice(start=-3) | reverse) }}
+  {% endfor %}
+</div>
+
+{% endblock content%}

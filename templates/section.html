@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/navigation.html" as navigation %}
 {% import "macros/section.html" as section %}
 {% import "macros/page.html" as page %}
 
@@ -7,17 +8,9 @@
 {% endblock title%}
 
 {% block content %}
-<nav class="ancestors">
-  {{ page::ancestors(page=section) }}
-</nav>
-<article>
-  <section role="feed" aria-busy="false">
-    {{ section::section(path=section.path | trim_start_matches(pat="/")) }}
-  </section>
-</article>
-{% if paginator %}
-<nav class="pagination">
-  {{ section::pagination(paginator=paginator) }}
-</nav>
-{% endif %}
+<h2 class="section-title"><a href="{{ get_url(path=section.path) | safe }}">{{section.title}}</a></h2>
+{% if paginator %}{{ navigation::pagination(paginator=paginator) }}{% endif %}
+{{ section::content(section=section, show_title=false) }}
+{{ section::pages(section=section) }}
+{% if paginator %}{{ navigation::pagination(paginator=paginator) }}{% endif %}
 {% endblock content %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "macros/page.html" as page %}
 {% import "macros/section.html" as section %}
+{% import "macros/navigation.html" as navigation %}
 
 {% block title %}
 #{{ term.name }} &middot; {{ super() }}
@@ -14,20 +15,14 @@
 {% endblock head %}
 
 {% block content %}
-<nav class="ancestors">
-  <section class="page-ancestors">
-    <a href="{{ get_url(path='/') | safe }}">Home</a> |
-    <a href="{{ get_url(path=taxonomy.name) | safe }}">{{ taxonomy.name | title }}</a>
-  </section>    
-</nav>
-<article>
-  <section class="list">
-    <h2>#<a href="{{ get_url(path=term.permalink) | safe }}">{{ term.name }}</a></h2>
-    {% if paginator %}
-    {{ section::list(pages=paginator.pages) }}
-    {% else %}
-    {{ section::list(pages=term.pages) }}
-    {% endif %}
-  </section>
+<article class="tag-pages">
+  <h2>#<a href="{{ get_url(path=term.permalink) | safe }}">{{ term.name }}</a></h2>
+  {{ navigation::pagination(paginator=paginator) }}
+  {% if paginator %}
+  {{ section::list(pages=paginator.pages) }}
+  {% else %}
+  {{ section::list(pages=term.pages) }}
+  {% endif %}
+  {{ navigation::pagination(paginator=paginator) }}
 </article>
 {% endblock content %}

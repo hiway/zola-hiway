@@ -1,0 +1,46 @@
+{% macro site() %}
+{%- set root_section = get_section(path="_index.md") %}
+<nav class="menu">
+  <ul>
+    <li><a href="{{ get_url(path='/') | safe}}">Home</a></li>
+    {%- for section in root_section.subsections | sort %}
+    {%- set section_name = section | replace(from='/_index.md', to='') %}
+    {% if section_name == config.extra.index_content | default(value="non-existent-section") %}{% continue %}{% endif %}
+    <li><a href="{{ get_url(path=section_name) | safe}}">{{ section_name | title }}</a></li>
+    {%- endfor -%}
+    {% if config.taxonomies %}
+    {% for taxonomy in config.taxonomies %}
+    <li><a href="{{ get_url(path=taxonomy.name) | safe }}">{{ taxonomy.name | title }}</a></li>
+    {% endfor %}
+    {% endif %}
+  </ul>
+</nav>
+{% endmacro %}
+
+
+{%- macro pagination(paginator) -%}
+<div class="pagination">
+  {% if paginator.next %}
+  <a rel="next" href="{{paginator.next | safe}}">◀ Older</a>
+  {% endif %}
+  {% if paginator.next and paginator.previous %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}
+  {% if paginator.previous %}
+  <a rel="prev" href="{{paginator.previous | safe}}">Newer ▶</a>
+  {% endif %}
+</div>
+{%- endmacro pagination -%}
+
+
+{% macro neighbors(page) %}
+{% if page.earlier or page.later %}
+<div class="neighbors">
+  {% if page.earlier %}
+  <a rel="prev" href="{{ get_url(path=page.earlier.path) | safe}}">◀ {{ page.earlier.title }}</a>
+  {% endif %}
+  {% if page.earlier and page.later %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}
+  {% if page.later %}
+  <a rel="next" href="{{ get_url(path=page.later.path) | safe}}">{{ page.later.title }} ▶</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endmacro %}

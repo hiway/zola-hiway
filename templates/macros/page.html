@@ -1,18 +1,65 @@
-{% macro page(page) %}
-  <h1><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h1>
-  {% if page.date or page.updated %}
-  <span>{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") }}</span>
-  {% endif %}
-{% endmacro %}
 
-{% macro ancestors(page) %}
-<section class="page-ancestors">
-{% for section_path in page.ancestors %}
-{% set section = get_section(path=section_path) %}
-{% set section_title = section.title | default(value="Home") %}
-{% set section_url = get_url(path=section_path) | replace(from="/_index.md", to="") %}
-<a href="{{ section_url | safe }}">{{ section_title }}</a>
-{% if not loop.last %}|{% endif %}
-{% endfor %}
-</section>
-{% endmacro %}
+{%- macro preview(page) -%}
+<article class="page-preview">
+  <h3 class="page-title"><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h3>
+  <div class="page-meta">
+    {% if page.date or page.updated %}
+    <time class="page-date">{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") | safe }}</time>
+    &verbar;
+    {% endif %}
+
+    <span class="page-word-count">{{ page.word_count }} word{{ page.word_count | pluralize }}</span>
+    /
+    <span class="page-reading-time">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</span>
+    
+    {% if page.taxonomies.tags %}
+    &verbar;
+    <span class="page-tags">
+      {% for tag in page.taxonomies.tags %}
+      #<a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a>
+      {% endfor %}
+    </span>
+    {% endif %}
+  </div>
+  {% if page.summary %}
+  <div class="page-summary">{{ page.summary | safe }}</div>
+  {% endif %}
+</article>
+{%- endmacro -%}
+
+
+{%- macro page(page) -%}
+<article class="page">
+  <h2 class="page-title"><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h2>
+
+  <div class="page-meta">
+    {% if page.date or page.updated %}
+    <span>
+      <time class="page-date">{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") | safe }}</time>
+    </span>
+    &verbar;
+    {% endif %}
+
+    <span>
+      <span class="page-word-count">{{ page.word_count }} word{{ page.word_count | pluralize }}</span>
+      /
+      <span class="page-reading-time">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</span>
+    </span>
+
+    {% if page.taxonomies.tags %}
+    &verbar;
+    <span class="page-tags">
+      {% for tag in page.taxonomies.tags %}
+      #<a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a>
+      {% endfor %}
+    </span>
+    {% endif %}
+  </div>
+
+  <div class="page-content">
+    {{ page.content | safe }}
+  </div>
+
+  {{ navigation::neighbors(page=page) }}
+</article>
+{%- endmacro -%}
