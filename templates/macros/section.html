@@ -1,11 +1,11 @@
 {% macro page(page) %}
 <article>
-  <h3><a href="{{ get_url(path=page.path) }}">{{ page.title }}</a></h3>
+  <h3><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h3>
   {% if page.date or page.updated %}
   <span>{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") }}</span>
   {% endif %}
   {% if page.summary %}
-  <p>{{ page.summary | safe }}</p>
+  {{ page.summary | safe }}
   {% endif %}
 </article>
 {% endmacro %}
@@ -15,7 +15,7 @@
 <section class="preview">
   {% set section = get_section(path=path ~ "_index.md") %}
   {% set pages = paginator.pages | default(value=section.pages) %}
-  <h2><a href="{{ get_url(path=section.path) }}">{{ section.title }}</a></h2>
+  <h2><a href="{{ get_url(path=section.path) | safe }}">{{ section.title }}</a></h2>
   {% for page in pages | sort(attribute="date") | slice(start=-1 * count) | reverse %}
   {{ section::page(page=page) }}
   {% endfor %} 
@@ -33,7 +33,7 @@
 <section class="list">
   {% set section = get_section(path=path ~ "_index.md") %}
   {% set pages = paginator.pages | default(value=section.pages) %}
-  <h2><a href="{{ get_url(path=section.path) }}">{{ section.title }}</a></h2>
+  <h2><a href="{{ get_url(path=section.path) | safe }}">{{ section.title }}</a></h2>
   {{ section::list(pages=pages) }}
 </section>
 {% endmacro %}
@@ -47,10 +47,10 @@
 
 {%- macro pagination(paginator) -%}
 {% if paginator.next %}
-  <a rel="next" href="{{paginator.next}}">◀ Older</a>
+  <a rel="next" href="{{paginator.next | safe}}">◀ Older</a>
 {% endif %}
 {% if paginator.next and paginator.previous %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}
 {% if paginator.previous %}
-  <a rel="prev" href="{{paginator.previous}}">Newer ▶</a>
+  <a rel="prev" href="{{paginator.previous | safe}}">Newer ▶</a>
   {% endif %}
 {%- endmacro pagination -%}

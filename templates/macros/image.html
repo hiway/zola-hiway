@@ -3,11 +3,11 @@
 {% set largest_size = sizes | sort | last %}
 {% set default_image = resize_image(path=path, width=default_size, op="fit_width") %}
 <img 
-    src="{{ default_image }}" 
+    src="{{ default_image | safe }}" 
     width="100%" 
     alt="{{ caption }}" 
     sizes="{% for size in sizes | slice(end=-1) %}(max-width: {{size}}px) {{size}}px, {% endfor %} {{largest_size}}px"
-    srcset="{% for size in sizes %}{{ resize_image(path=path, width=size, height=800, format='jpeg', op='fit') }} {{size}}w, {% endfor %}"
+    srcset="{% for size in sizes %}{{ resize_image(path=path, width=size, height=800, format='jpeg', op='fit')  | safe}} {{size}}w, {% endfor %}"
     style="max-width: {{ max_width }};"
     />
 {% endmacro %}

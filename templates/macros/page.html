@@ -1,5 +1,5 @@
 {% macro page(page) %}
-  <h1><a href="{{ get_url(path=page.path) }}">{{ page.title }}</a></h1>
+  <h1><a href="{{ get_url(path=page.path) | safe }}">{{ page.title }}</a></h1>
   {% if page.date or page.updated %}
   <span>{{ page.updated | default(value=page.date) | date(format="%B %d, %Y") }}</span>
   {% endif %}
@@ -11,8 +11,8 @@
 {% set section = get_section(path=section_path) %}
 {% set section_title = section.title | default(value="Home") %}
 {% set section_url = get_url(path=section_path) | replace(from="/_index.md", to="") %}
-<a href="{{ section_url }}">{{ section_title }}</a>
+<a href="{{ section_url | safe }}">{{ section_title }}</a>
 {% if not loop.last %}|{% endif %}
 {% endfor %}
-</div>
+</section>
 {% endmacro %}

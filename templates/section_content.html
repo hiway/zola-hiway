@@ -12,6 +12,6 @@ About - {{ super() }}
 </nav>
 <article>
   <h1><a href="{{ get_url(path=section.path) }}">{{ section.title }}</a></h1>
-  <p>{{ section.content | safe }}</p>
+  {{ section.content | safe }}
 </article>
 {% endblock content %}
