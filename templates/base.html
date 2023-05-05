@@ -6,28 +6,53 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>{% block title %}{{ config.title }}{% endblock title %}</title>
-	<meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	{% if config.extra.style_enable | default(value=true) %}
-	<link rel="stylesheet" href="{{ get_url(path='/css/style.css') | safe }}">
-	{% endif %}
-	{%- block head %}{% endblock head %}
+    <meta charset="utf-8">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icon.png" />
+    {% if config.extra.style_enable | default(value=true) %}
+    <link rel="stylesheet" href="{{ get_url(path='/css/style.css') | safe }}">
+    {% endif %}
+    {% block rss %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+    {% endblock %}
+    {%- block head %}{% endblock head %}
 </head>
+
 <body>
-	<header class="main">
-		{{ header::toolbar() }} 
-	</header>
-	<hr/>
-	<main>
-		{% block content -%}{%- endblock content %}
-	</main>
-	<hr/>
-	<footer>
-    {{ footer::made_with() }}
-	</footer>
+    <header class="main">
+        {{ header::toolbar() }}
+    </header>
+    <hr />
+    <main>
+        {% block content -%}{%- endblock content %}
+    </main>
+    <hr />
+
+    {% block footer %}
+    <footer role="contentinfo">
+        <hr />
+        {% if config.extra.footer_links %}
+        <nav class="footer-links" role="navigation">
+            {% for item in config.extra.footer_links %}
+            <a href="{{ item.url | replace(from='$BASE_URL', to=config.base_url) | safe }}">{{ item.name }}</a>
+            {% if loop.last %}{% else %}
+            <span>&middot;</span>
+            {% endif %}
+            {% endfor %}
+        </nav>
+        {% endif %}
+        {% block taglines %}
+        <small>
+            {{ footer::made_with() }}
+        </small>
+        {% endblock taglines %}
+    </footer>
+    {% endblock footer %}
+
+
 </body>
 
 </html>

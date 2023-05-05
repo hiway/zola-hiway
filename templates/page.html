@@ -4,7 +4,7 @@
 {% import "macros/page.html" as page %}
 
 {% block title %}
-{{ page.title }} - {{ super() }}
+{% if page.title %}{{ page.title }} - {% endif %}{{ super() }}
 {% endblock title%}
 
 {% block content %}

@@ -21,8 +21,8 @@
     </span>
     {% endif %}
   </div>
-  {% if page.summary %}
-  <div class="page-summary">{{ page.summary | safe }}</div>
+  {% if page.description %}
+  <p class="page-description">{{ page.description | safe }}</p>
   {% endif %}
 </article>
 {%- endmacro -%}
